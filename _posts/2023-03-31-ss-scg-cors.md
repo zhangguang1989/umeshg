@@ -7,6 +7,7 @@ catalog:      true
 tags:
     - Java
     - 跨域
+    - web
 ---
 
 spring-security和spring-cloud-gateway结合使用，可能出现跨域配置不生效的问题
