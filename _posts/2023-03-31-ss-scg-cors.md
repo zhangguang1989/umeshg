@@ -13,8 +13,8 @@ spring-security和spring-cloud-gateway结合使用，可能出现跨域配置不
 # 解决办法
 解决办法分两种
 
-1. 启用 Security 的跨域配置，手动指定 CorsConfigurationSource
-2. 配置一个 CorsConfigurationSource 的Bean，Security 自动完成注入
+- 启用 Security 的跨域配置，手动指定 CorsConfigurationSource
+- 配置一个 CorsConfigurationSource 的Bean，Security 自动完成注入
 ## 方法一
 启用 Security 的跨域配置，手动指定 CorsConfigurationSource：
 ```java
@@ -76,8 +76,9 @@ public CorsConfigurationSource corsConfigurationSource() {
 # 探究原因
 ## 为什么需要对Sping security进行单独的跨域配置？
 首先必须明确几点：
-1. Spring cloud gateway的跨域都是通过CorsWebFilter这个过滤器来完成的。上面配置CorsConfigurationSource，也无非是让Spring Security利用CorsConfigurationSource自动构建出一个CorsWebFilter添加到它的过滤链中。
-2. 对于跨域的请求，浏览器会先发送一个options方法的跨域预检请求，询问服务器是否允许浏览器的跨域请求，如果浏览器响应了正确的响应头，浏览器才能继续发送跨域请求，否则就会报跨域错误。  
+- Spring cloud gateway的跨域都是通过CorsWebFilter这个过滤器来完成的。上面配置CorsConfigurationSource，也无非是让Spring Security利用CorsConfigurationSource自动构建出一个CorsWebFilter添加到它的过滤链中。
+- 对于跨域的请求，浏览器会先发送一个options方法的跨域预检请求，询问服务器是否允许浏览器的跨域请求，如果浏览器响应了正确的响应头，浏览器才能继续发送跨域请求，否则就会报跨域错误。  
+
 我们知道Spring Security也是基于过滤器的，既然是过滤器那就会涉及到一个先后的问题，事实证明 gateway 的CorsWebFilter是在Spring Security的过滤链之后的。
 一个options方法的跨域预检请求来到Spring Security的过滤链，Spring Security一看这个options请求没有携带用户凭证的Authorization头、Cookie或者token参数等信息，直接把这个请求给拦了下来，浏览器收不到正确的响应就会报跨域错误。所以如果使用了Sping security，就需要为Sping security配置跨域，让Sping security添加CorsWebFilter到自己的过滤链中，防止跨域预检请求被直接拒了。
 
