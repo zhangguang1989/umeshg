@@ -4,6 +4,7 @@ title: "About"
 description: "「他单纯只想把日子过得不浪费」"
 header-img: "img/bg-cat.jpg"
 header-mask: 0.3
+cn-title: "关于"
 ---
 
 <!-- Chinese Version -->
@@ -36,4 +37,25 @@ header-mask: 0.3
     })();
 </script>
 <!-- disqus 公共JS代码 end -->
+{% endif %}
+
+
+{% if site.valine_comment.enable %}
+<div id="vcomments"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script> 
+    new Valine({ 
+        el: '#vcomments', 
+        appId: 'bJkXrB5b4K83hE7YiyzINPTr-gzGzoHsz', 
+        appKey: 'zdmdqF0IvA38J6felHsMyIcp', 
+        avatar: 'robohash', 
+        placeholder:'欢迎留言交流', 
+        pageSize: 20, 
+        highlight: true, 
+        notify: false, 
+        visitor: true, 
+        avatarForce: true, 
+        meta: ['nick','mail'] 
+    }); 
+</script>
 {% endif %}
