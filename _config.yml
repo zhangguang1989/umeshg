@@ -64,7 +64,8 @@ kramdown:
 # Netease settings
 netease_comment: false
 
-valine_comment.enable: true
+valine_comment: 
+  enable: true
 
 # Analytics settings
 # Baidu Analytics
